@@ -22,6 +22,8 @@ override :bundler, version: "2.6.6"
 dependency "nokogiri"
 dependency "resque"
 dependency "redis"
+# our local configuration files
+dependency "redis-config"
 
 # change FTP to HTTP(S), because corporate network does not support FTP
 override :libffi, version: '3.2.1', source: { sha256: "d06ebb8e1d9a22d19e38d63fdb83954253f39bedc5d46232a05645685722ca37", url: "http://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz" }
