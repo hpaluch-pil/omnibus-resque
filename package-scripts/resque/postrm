@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Perform necessary resque removal steps
+# after package is uninstalled.
+#
+
+echo "resque has been uninstalled!"
+
+exit 0
