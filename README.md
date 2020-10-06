@@ -54,6 +54,10 @@ the package cache directory (`/var/cache/omnibus/pkg`):
 $ bin/omnibus clean resque --purge
 ```
 
+>
+> Following actions were not yet tested:
+>
+
 ### Publish
 
 Omnibus has a built-in mechanism for releasing to a variety of "backends", such

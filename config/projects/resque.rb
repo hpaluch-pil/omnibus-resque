@@ -13,7 +13,11 @@ dependency "preparation"
 # version manifest file
 dependency "version-manifest"
 
+# all these three must have same version, otherwise very weird things will happen!!!
 override :ruby, version: "2.6.6"
+override :rubygems, version: "2.6.6"
+override :bundler, version: "2.6.6"
+
 # resque dependencies/components
 dependency "nokogiri"
 dependency "resque"
