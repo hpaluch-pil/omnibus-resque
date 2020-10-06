@@ -1,11 +1,21 @@
 resque Omnibus project
 ======================
-This project creates full-stack platform-specific packages for
-`resque`!
+This project creates (someday in future) full-stack platform-specific packages for
+`resque` using [Chef-Omnibus](https://github.com/chef/omnibus)!
+
+WARNING! It is highly experimental stuff! 
 
 Installation
 ------------
-You must have a sane Ruby 2.0.0+ environment with Bundler installed. Ensure all
+
+Tested under Debian10/amd64 with Ruby2.6.6 installed and configure via [RBEnv](https://github.com/rbenv/rbenv). Your debian should have installed at least:
+```shell
+sudo apt-get install curl make gcc g++ ruby-dev git
+# required by rbenv/ruby
+sudo apt-get install -y libssl-dev libreadline-dev
+```
+
+You must have a sane Ruby 2.6.6+ environment with Bundler installed. Ensure all
 the required gems are installed:
 
 ```shell
