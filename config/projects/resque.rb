@@ -20,6 +20,7 @@ override :bundler, version: "2.6.6"
 
 # resque dependencies/components
 dependency "nokogiri"
+override :nokogiri, version: "1.10.10"
 dependency "resque"
 dependency "redis"
 # our local configuration files

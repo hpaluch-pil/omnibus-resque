@@ -1,0 +1,3 @@
+#!/bin/sh
+exec /opt/resque/embedded/bin/svlogd -tt /var/log/resque/redis
+

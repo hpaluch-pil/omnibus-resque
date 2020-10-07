@@ -8,5 +8,6 @@ skip_transitive_dependency_licensing true
 source path: File.expand_path('files/main', Omnibus::Config.project_root)
 
 build do
-  copy 'bin/run-all-services.sh',"#{install_dir}/bin/"
+  # fortunately, copy is recursive
+  copy '*',"#{install_dir}/"
 end

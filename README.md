@@ -32,6 +32,16 @@ You create a platform-specific package using the `build project` command:
 $ bin/omnibus build resque
 ```
 
+NOTE: The `resque` is project name. Omnibus will use `config/projects/resque.rb` in
+such case.
+
+> For development only:
+>
+> To just copy configuration files into `/opt/resque_shortcut` use this phony
+> command/project: `bin/omnibus build resque_shortcut`. It is used for speedy
+> testing of stuff only - please ignore build .deb package.
+
+
 The platform/architecture type of the package created will match the platform
 where the `build project` command is invoked. For example, running this command
 on a MacBook Pro will generate a Mac OS X package. After the build completes
