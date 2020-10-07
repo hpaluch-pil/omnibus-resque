@@ -12,6 +12,8 @@ source path: File.expand_path('files/redis', Omnibus::Config.project_root)
 build do
   command "mkdir -p #{install_dir}/etc/redis"
   copy 'redis.conf',"#{install_dir}/etc/redis/"
+  command "mkdir -p #{install_dir}/sv/redis"
+  copy 'run',"#{install_dir}/sv/redis/"
   # directory for local Redis Unix socket
   command "mkdir -p #{install_dir}/var/run/redis"
   touch "#{install_dir}/var/run/redis/.gitkeep"

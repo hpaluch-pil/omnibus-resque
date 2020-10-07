@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+exec /opt/resque/embedded/bin/chpst -P -U omniresq \
+       	/opt/resque/embedded/bin/redis-server /opt/resque/etc/redis/redis.conf
+

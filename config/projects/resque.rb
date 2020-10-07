@@ -23,6 +23,7 @@ dependency "nokogiri"
 dependency "resque"
 dependency "redis"
 # our local configuration files
+dependency "main-config"
 dependency "redis-config"
 
 # change FTP to HTTP(S), because corporate network does not support FTP

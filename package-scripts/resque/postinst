@@ -6,12 +6,48 @@
 
 PROGNAME=`basename $0`
 
+set -e
 error_exit()
 {
   echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
   exit 1
 }
 
-echo "Thank you for installing resque!"
+# ripped from /var/lib/dpkg/info/openssh-server.postinst
+setup_omniresq_user(){
+	if ! getent passwd omniresq >/dev/null; then
+		# I hate adduser - stupid defaults and does nothing useful...
+		#adduser --quiet --no-create-home --home /var/opt/omniresq --shell /usr/sbin/nologin omniresq
+		/usr/sbin/useradd -d /var/opt/resque -s /usr/sbin/nologin omniresq
+	fi
+}
+
+setup_runtime_dirs()
+{
+	for i in /var/opt/resque/redis
+	do
+		mkdir -p $i
+		chown omniresq:omniresq $i
+	done
+}
+
+my_configure()
+{
+	# at first setup runtime user
+	setup_omniresq_user
+	setup_runtime_dirs
+	exit 0
+}
+
+case "$1" in 
+	configure)
+		my_configure
+		;;
+	*)
+		# silently ignore weird states - for example "postinst  abort-remove"
+		# see https://wiki.debian.org/MaintainerScripts
+		exit 0
+		;;
+esac
 
 exit 0
