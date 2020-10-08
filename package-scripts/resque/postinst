@@ -25,7 +25,7 @@ setup_omniresq_user(){
 setup_runtime_dirs()
 {
 	for i in /var/opt/resque/redis /var/log/resque/redis \
-	       	/var/log/resque/resque-web
+	       	/var/log/resque/resque-web /var/log/resque/workers/url_title
 	do
 		mkdir -p $i
 		chown omniresq:omniresq $i
