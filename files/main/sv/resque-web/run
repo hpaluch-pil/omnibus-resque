@@ -3,6 +3,9 @@
 set -e
 
 cd /
+# redirect stderr to stdout 'cause
+# svlog logs stdout only (passwd as stdin by svrun)
+exec 2>&1
 
 exec /opt/resque/embedded/bin/chpst -P -U omniresq  -u omniresq \
        	/opt/resque/bin/rackup -o 0.0.0.0 /opt/resque/etc/resque-web/config.ru
