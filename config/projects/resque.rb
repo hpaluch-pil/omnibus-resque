@@ -34,3 +34,10 @@ override :libxslt, version: '1.1.34', source: { sha256: "98b1bd46d6792925ad2dfe9
 exclude "**/.git"
 exclude "**/bundler/git"
 
+# exclude manpages and documentation - ripped from gitlab-omnibus
+#exclude 'embedded/man'
+exclude 'embedded/share/doc'
+exclude 'embedded/share/gtk-doc'
+exclude 'embedded/share/info'
+exclude 'embedded/share/man'
+
