@@ -10,6 +10,7 @@ Installation
 
 Tested under Debian10/amd64 with Ruby2.6.6 installed and configure via [RBEnv](https://github.com/rbenv/rbenv). Your debian should have installed at least:
 ```shell
+# we use ruby-dev to install typical ruby dependencies, even when we use custom ruby runtime
 sudo apt-get install curl make gcc g++ ruby-dev git
 # required by rbenv/ruby
 sudo apt-get install -y libssl-dev libreadline-dev
