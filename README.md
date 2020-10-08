@@ -5,8 +5,8 @@ This project creates (someday in future) full-stack platform-specific packages f
 
 WARNING! It is highly experimental stuff! 
 
-Installation
-------------
+Build setup
+-----------
 
 Tested under Debian10/amd64 with Ruby2.6.6 installed and configure via [RBEnv](https://github.com/rbenv/rbenv). Your debian should have installed at least:
 ```shell
@@ -69,24 +69,33 @@ $ bin/omnibus clean resque --purge
 > Following actions were not yet tested:
 >
 
-### Publish
+On successfull build there should be created file like:
 
-Omnibus has a built-in mechanism for releasing to a variety of "backends", such
-as Amazon S3. You must set the proper credentials in your
-[`omnibus.rb`](omnibus.rb) config file or specify them via the command line.
-
-```shell
-$ bin/omnibus publish path/to/*.deb --backend s3
+```
+pkg/resque_0.0.0-1_amd64.deb
 ```
 
-### Help
-
-Full help for the Omnibus command line interface can be accessed with the
-`help` command:
-
-```shell
-$ bin/omnibus help
+You can then install it on target Debian10 - *must be different from build system* using:
 ```
+sudo dpkg -i resque-shortcut_0.0.0-1_amd64.deb
+```
+
+After install you can run manually all services (currently only Redis
+works) using:
+
+```
+sudo /opt/resque/bin/run-all-services.sh
+```
+WARNING! Above script will NOT detach from terminal (yet).
+
+You can stop all services using:
+
+```
+sudo /opt/resque/bin/stop-all-services.sh
+```
+
+Debug: Logs are under `/var/log/resque/SERVICE/*`.
+
 
 Version Manifest
 ----------------
@@ -105,44 +114,3 @@ This will output a JSON-formatted manifest containing the resolved
 version of every software definition.
 
 
-Kitchen-based Build Environment
--------------------------------
-Every Omnibus project ships with a project-specific
-[Berksfile](https://docs.chef.io/berkshelf.html) that will allow you to build
-your omnibus projects on all of the platforms listed in the
-[`.kitchen.yml`](.kitchen.yml). You can add/remove additional platforms as
-needed by changing the list found in the [`.kitchen.yml`](.kitchen.yml)
-`platforms` YAML stanza.
-
-This build environment is designed to get you up-and-running quickly. However,
-there is nothing that restricts you from building on other platforms. Simply use
-the [omnibus cookbook](https://github.com/chef-cookbooks/omnibus) to setup your
-desired platform and execute the build steps listed above.
-
-The default build environment requires Test Kitchen and VirtualBox for local
-development. Test Kitchen also exposes the ability to provision instances using
-various cloud providers like AWS, DigitalOcean, or OpenStack. For more
-information, please see the [Test Kitchen documentation](https://kitchen.ci/).
-
-Once you have tweaked your [`.kitchen.yml`](.kitchen.yml) (or
-[`.kitchen.local.yml`](.kitchen.local.yml)) to your liking, you can bring up an
-individual build environment using the `kitchen` command.
-
-
-```shell
-$ bin/kitchen converge ubuntu-1804
-```
-
-Then login to the instance and build the project as described in the Usage
-section:
-
-```shell
-$ bin/kitchen login ubuntu-1804
-[vagrant@ubuntu...] $ .  load-omnibus-toolchain.sh
-[vagrant@ubuntu...] $ cd resque
-[vagrant@ubuntu...] $ bundle install
-[vagrant@ubuntu...] $ bin/omnibus build resque
-```
-
-For a complete list of all commands and platforms, run `kitchen list` or
-`kitchen help`.
