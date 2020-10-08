@@ -131,12 +131,18 @@ sudo chown $USER /var/cache/omnibus /opt/resque
 
 Then `bin/omnibus build resque` should work again, however it will fetch and build and reinstall everything.
 
+Bugs
+----
+
+The `url_title` worker does not handle/log `utf-8` (or any other) encoding - so some characters could be lost
+or logged with unpredictable encoding.
+
 Resources
 ---------
 
 * Chef-Omnibus project:
   - https://github.com/chef/omnibus
 * Omnibus-Software - default `software` components (specified by `dependency`)
-  if not overriden by custom file under `config/software/`
+  if not overridden by custom file under `config/software/`
   - https://github.com/chef/omnibus-software
 
