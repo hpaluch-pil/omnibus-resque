@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+cd /
+
+exec /opt/resque/embedded/bin/chpst -P -U omniresq  -u omniresq \
+       	/opt/resque/bin/rackup -o 0.0.0.0 /opt/resque/etc/resque-web/config.ru
+

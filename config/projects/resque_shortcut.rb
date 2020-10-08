@@ -18,7 +18,6 @@ dependency "version-manifest"
 
 # our local configuration files
 dependency "main-config"
-dependency "redis-config"
 
 exclude "**/.git"
 exclude "**/bundler/git"
