@@ -50,32 +50,6 @@ such case.
 > testing of stuff only - please ignore build .deb package.
 
 
-The platform/architecture type of the package created will match the platform
-where the `build project` command is invoked. For example, running this command
-on a MacBook Pro will generate a Mac OS X package. After the build completes
-packages will be available in the `pkg/` folder.
-
-### Clean
-
-You can clean up all temporary files generated during the build process with
-the `clean` command:
-
-```shell
-$ bin/omnibus clean resque
-```
-
-Adding the `--purge` purge option removes __ALL__ files generated during the
-build including the project install directory (`/opt/resque`) and
-the package cache directory (`/var/cache/omnibus/pkg`):
-
-```shell
-$ bin/omnibus clean resque --purge
-```
-
->
-> Following actions were not yet tested:
->
-
 On successfull build there should be created file like:
 
 ```
@@ -140,6 +114,22 @@ sudo /opt/resque/bin/stop-all-services.sh
 ```
 
 Debug: Logs are under `/var/log/resque/SERVICE/*`.
+
+Notes
+-----
+
+## Rebuild failing
+
+Sometimes on rebuild there are confusing errors, like that `/opt/resque/embedded/bin/gem` not found.
+In such case drastic cleanup help before build:
+
+```bash
+sudo rm -rf /opt/resque/ /var/cache/omnibus/
+sudo mkdir -p /var/cache/omnibus  /opt/resque
+sudo chown $USER /var/cache/omnibus /opt/resque
+```
+
+Then `bin/omnibus build resque` should work again, however it will fetch and build and reinstall everything.
 
 Resources
 ---------
