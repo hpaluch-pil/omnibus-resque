@@ -80,13 +80,31 @@ You can then install it on target Debian10 - *must be different from build syste
 sudo dpkg -i resque-shortcut_0.0.0-1_amd64.deb
 ```
 
-After install you can run manually all services (currently only Redis
-works) using:
+After install you can run manually all services (Redis and Web frontend works
+so far) using:
 
 ```
-sudo /opt/resque/bin/run-all-services.sh
+sudo /opt/resque/bin/start-all-services.sh
 ```
-WARNING! Above script will NOT detach from terminal (yet).
+
+Try this command (or suitable `netstat`) to see if Redis is running on Unix socket:
+
+```bash
+ss -x -o state listening | grep redis.socket
+
+u_str 0      128    /var/opt/resque/redis/redis.socket 22874             * 0
+```
+Look into file `/var/log/resque/redis/current` in case of problems with Redis
+
+Use this command to verify that web-server is running:
+```
+ss -t -o state listening  | grep :9292
+
+0          128                   0.0.0.0:9292                  0.0.0.0:*
+```
+If it is there point your browser to `http://YOUR_SERVER_IP:9292` to see Resque admin interface.
+
+In case of problems look ino file `/var/log/resque/resque-web/current`
 
 You can stop all services using:
 
