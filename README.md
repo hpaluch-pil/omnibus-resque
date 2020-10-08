@@ -3,7 +3,14 @@ resque Omnibus project
 This project creates (someday in future) full-stack platform-specific packages for
 `resque` using [Chef-Omnibus](https://github.com/chef/omnibus)!
 
-WARNING! It is highly experimental stuff! 
+It is simple demo that contains:
+- service `redis` server that listens on unix (file) socket
+- service `resque-web` Resque frontend available on `http://IP:9292` URL
+- service `worker-url_title` (this worker accepts URL as input parameter and fetches
+  and extracts `<title/>` from that site and logs result
+- example task creation command `/opt/resque/etc/workers/url_title/put_task.rb` that will put specified URL into worker
+  queue
+
 
 Build setup
 -----------
@@ -104,7 +111,25 @@ ss -t -o state listening  | grep :9292
 ```
 If it is there point your browser to `http://YOUR_SERVER_IP:9292` to see Resque admin interface.
 
-In case of problems look ino file `/var/log/resque/resque-web/current`
+In case of problems look into file `/var/log/resque/resque-web/current`
+
+Now there is even example job using `url_title`. You can enqueue new task using command like:
+
+```bash
+/opt/resque/etc/workers/url_title/put_task.rb https://slashdot.org/
+```
+
+If everything works properly then Resque will call worker for `url_title` queue and fetch specified URL
+and extract `<title/>` element and logs results to `/var/log/resque/workers/url_title/current`
+
+Here is example output in `/var/log/resque/workers/url_title/current`:
+
+```
+2020-10-08_12:20:57.78029 Fetching 'https://slashdot.org/'...
+2020-10-08_12:21:06.26359 Title of url 'https://slashdot.org/' is: 'Slashdot: News for nerds, stuff that matters'
+```
+
+
 
 You can stop all services using:
 
