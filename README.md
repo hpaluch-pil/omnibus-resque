@@ -86,14 +86,13 @@ Installation and usage of Debian package
 ----------------------------------------
 
 You can then install `.deb` package from previous section on target Debian10 - *must be different from build system* using:
-```
+```bash
 sudo dpkg -i resque-shortcut_0.0.0-1_amd64.deb
 ```
 
-After install you can run manually all services (Redis and Web frontend works
-so far) using:
+After install you can run manually all services using:
 
-```
+```bash
 sudo /opt/resque/bin/start-all-services.sh
 ```
 
@@ -107,7 +106,7 @@ u_str 0      128    /var/opt/resque/redis/redis.socket 22874             * 0
 Look into file `/var/log/resque/redis/current` in case of problems with Redis
 
 Use this command to verify that web-server is running:
-```
+```bash
 ss -t -o state listening  | grep :9292
 
 0          128                   0.0.0.0:9292                  0.0.0.0:*
@@ -136,27 +135,18 @@ Here is example output in `/var/log/resque/workers/url_title/current`:
 
 You can stop all services using:
 
-```
+```bash
 sudo /opt/resque/bin/stop-all-services.sh
 ```
 
 Debug: Logs are under `/var/log/resque/SERVICE/*`.
 
+Resources
+---------
 
-Version Manifest
-----------------
-
-Git-based software definitions may specify branches as their
-default_version. In this case, the exact git revision to use will be
-determined at build-time unless a project override (see below) or
-external version manifest is used.  To generate a version manifest use
-the `omnibus manifest` command:
-
-```
-omnibus manifest PROJECT -l warn
-```
-
-This will output a JSON-formatted manifest containing the resolved
-version of every software definition.
-
+* Chef-Omnibus project:
+  - https://github.com/chef/omnibus
+* Omnibus-Software - default `software` components (specified by `dependency`)
+  if not overriden by custom file under `config/software/`
+  - https://github.com/chef/omnibus-software
 
