@@ -1,11 +1,11 @@
 resque Omnibus project
 ======================
-This project creates (someday in future) full-stack platform-specific packages for
+This project creates full-stack platform-specific packages for
 `resque` using [Chef-Omnibus](https://github.com/chef/omnibus)!
 
 It is simple demo that contains:
 - service `redis` server that listens on unix (file) socket
-- service `resque-web` Resque frontend available on `http://IP:9292` URL
+- service `resque-web` Resque Web frontend available on `http://IP:9292` URL
 - service `worker-url_title` (this worker accepts URL as input parameter and fetches
   and extracts `<title/>` from that site and logs result
 - example task creation command `/opt/resque/etc/workers/url_title/put_task.rb` that will put specified URL into worker
@@ -30,8 +30,8 @@ the required gems are installed:
 $ bundle install --binstubs
 ```
 
-Usage
------
+Building Debian package
+-----------------------
 ### Build
 
 You create a platform-specific package using the `build project` command:
@@ -82,7 +82,10 @@ On successfull build there should be created file like:
 pkg/resque_0.0.0-1_amd64.deb
 ```
 
-You can then install it on target Debian10 - *must be different from build system* using:
+Installation and usage of Debian package
+----------------------------------------
+
+You can then install `.deb` package from previous section on target Debian10 - *must be different from build system* using:
 ```
 sudo dpkg -i resque-shortcut_0.0.0-1_amd64.deb
 ```
