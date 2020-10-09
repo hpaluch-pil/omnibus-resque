@@ -23,6 +23,73 @@ sudo apt-get install curl make gcc g++ ruby-dev git
 sudo apt-get install -y libssl-dev libreadline-dev
 ```
 
+### Installing RBEnv
+
+NOTE: All actions done as non-privileged user.
+
+At first checkout RBEnv into `~/.rbenv` using:
+
+```bash
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+```
+
+Then add to your `~/.bashrc`:
+
+```bash
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+```
+
+Now source this new `~/.bashrc`:
+
+```bash
+source ~/.bashrc
+```
+
+Install `ruby-build` plugin:
+```bash
+mkdir -p "$(rbenv root)"/plugins
+git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+```
+
+To see available ruby version use this command:
+
+```bash
+rbenv install --list
+```
+
+Now install 2.6.6:
+```bash
+rbenv install 2.6.6
+# it may take some time
+```
+
+Set this new ruby version as RBEnv global default:
+```bash
+rbenv global 2.6.6
+rbenv global
+   2.6.6
+```
+
+Verify that default ruby is really 2.6.6:
+
+```bash
+ruby --version
+   ruby 2.6.6p146 (2020-03-31 revision 67876) [x86_64-linux
+```
+
+Now you are ready to proceed to next section...
+
+### When you have Ruby 2.6.6 installed
+
+Now checkout this project:
+```bash
+mkdir -p ~/projects
+cd ~/projects
+git clone  https://github.com/hpaluch-pil/omnibus-resque.git
+cd omnibus-resque
+```
+
 You must have a sane Ruby 2.6.6+ environment with Bundler installed. Ensure all
 the required gems are installed:
 
@@ -34,14 +101,22 @@ Building Debian package
 -----------------------
 ### Build
 
-You create a platform-specific package using the `build project` command:
+Ensure that there exist directories required for this build:
+```bash
+sudo mkdir -p /var/cache/omnibus  /opt/resque
+sudo chown $USER /var/cache/omnibus /opt/resque
+```
+
+Then you can create a platform-specific (=for host OS)  package
+using the `build project` command:
 
 ```shell
+cd ~/projects/omnibus-resque
 $ bin/omnibus build resque
 ```
 
-NOTE: The `resque` is project name. Omnibus will use `config/projects/resque.rb` in
-such case.
+NOTE: The `resque` is project name. Omnibus will
+use `config/projects/resque.rb` in such case.
 
 > For development only:
 >
@@ -50,7 +125,7 @@ such case.
 > testing of stuff only - please ignore build .deb package.
 
 
-On successfull build there should be created file like:
+On successful build there should be created file like:
 
 ```
 pkg/resque_0.0.0-1_amd64.deb
