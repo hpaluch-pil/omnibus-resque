@@ -167,7 +167,8 @@ In case of problems look into file `/var/log/resque/resque-web/current`
 Now there is even example job using `url_title`. You can enqueue new task using command like:
 
 ```bash
-/opt/resque/etc/workers/url_title/put_task.rb https://slashdot.org/
+# use sudo to guarantee access to Redis Unix socket
+sudo -u omniresq /opt/resque/etc/workers/url_title/put_task.rb https://slashdot.org/
 ```
 
 If everything works properly then Resque will call worker for `url_title` queue and fetch specified URL
