@@ -11,17 +11,32 @@ It is simple demo that contains:
 - example task creation command `/opt/resque/etc/workers/url_title/put_task.rb` that will put specified URL into worker
   queue
 
+Build was tested on:
+- Debian10/amd64 (`.deb` package created)
+- openSUSE LEAP 15.2 (`.rpm` package created)
 
 Build setup
 -----------
 
-Tested under Debian10/amd64 with Ruby2.6.6 installed and configure via [RBEnv](https://github.com/rbenv/rbenv). Your debian should have installed at least:
+We must install requirements for [RBEnv](https://github.com/rbenv/rbenv) with Ruby 2.6.6 (Omnibus requirement).
+
+On `Debian 10` build Host install these packages:
 ```shell
 # we use ruby-dev to install typical ruby dependencies, even when we use custom ruby runtime
 sudo apt-get install curl make gcc g++ ruby-dev git fakeroot
 # required by rbenv/ruby
 sudo apt-get install -y libssl-dev libreadline-dev
 ```
+
+On `openSUSE LEAP 15.2` install these packages:
+```shell
+# probably overkill but easy to setup...
+sudo zypper in -t pattern devel_C_C++
+sudo zypper in -t pattern devel_rpm_build
+# additional Ruby build dependencies
+sudo zypper in libopenssl-devel readline-devel
+```
+
 
 ### Installing RBEnv
 
@@ -128,7 +143,10 @@ use `config/projects/resque.rb` in such case.
 On successful build there should be created file like:
 
 ```
+# Debian10
 pkg/resque_0.0.0-1_amd64.deb
+# openSUSE LEAP 15.2
+pkg/resque-0.0.0-1.sles15.x86_64.rpm
 ```
 
 Installation and usage of Debian package
@@ -136,8 +154,14 @@ Installation and usage of Debian package
 
 You can then install `.deb` package from previous section on target Debian10 - *must be different from build system* using:
 ```bash
-sudo dpkg -i resque-shortcut_0.0.0-1_amd64.deb
+sudo dpkg -i resque_0.0.0-1_amd64.deb
 ```
+
+Or RPM in case of `openSUSE LEAP 15.2`
+```bash
+rpm -ivh resque-0.0.0-1.sles15.x86_64.rpm
+```
+
 
 After install you can run manually all services using:
 
