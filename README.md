@@ -112,8 +112,14 @@ the required gems are installed:
 $ bundle install --binstubs
 ```
 
-Building Debian package
------------------------
+Building Host package
+---------------------
+
+Here we will show how to build package for Host system (it means, that
+on Debian it will .deb, on SUSE it will build .rpm). Other possibility
+is using Kitchen, but it was not tested yet.
+
+
 ### Build
 
 Ensure that there exist directories required for this build:
@@ -149,10 +155,10 @@ pkg/resque_0.0.0-1_amd64.deb
 pkg/resque-0.0.0-1.sles15.x86_64.rpm
 ```
 
-Installation and usage of Debian package
-----------------------------------------
+Installation and usage of package
+---------------------------------
 
-You can then install `.deb` package from previous section on target Debian10 - *must be different from build system* using:
+You can then install `.deb` package from previous section on target Debian10 - _must be different from build system_ using:
 ```bash
 sudo dpkg -i resque_0.0.0-1_amd64.deb
 ```
