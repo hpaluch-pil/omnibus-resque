@@ -24,6 +24,9 @@ Build was tested on these hosts:
 - `Debian10` (`.deb` package created)
 - `openSUSE LEAP 15.2` (`.rpm` package created)
 
+Also under `Debian10` Host it is now possible to build CentOS7 package using Kitchen with Docker.
+Please see Kitchen section below.
+
 ## Build setup
 
 We must install requirements for [RBEnv](https://github.com/rbenv/rbenv) with
@@ -296,8 +299,17 @@ rm -rf  .kitchen .bundle
 . ~/load-omnibus-toolchain.sh
 bundle install --binstubs
 bin/omnibus build resque
-# TODO: copy-back created RPM
+# copy-back created RPM
+exit # exit back from 'kitchen' user to 'root' user
+cp /home/kitchen/omnibus-resque/pkg/resque-0.0.0-1.el7.x86_64.rpm \
+   /host-home/ansible/projects/omnibus-resque/pkg/
+# exit from Kitchen container
+exit
 ```
+
+Notes:
+- you can again enter running container using `kitchen login`
+- once you are done with this container you should destroy it using `kitchen destroy`
 
 ## Notes
 
