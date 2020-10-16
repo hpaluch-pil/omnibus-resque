@@ -264,7 +264,7 @@ Tested on Debian 10 HOST:
 Install these additional GEMs to your local RBEnv using:
 
 ```shell
-sudo gem install test-kitchen kitchen-dokken
+gem install test-kitchen kitchen-dokken
 ```
 
 WARNING! Must use recent enough Kitchen - version 2.7.2 seems to work well...
