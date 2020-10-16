@@ -242,6 +242,63 @@ sudo /opt/resque/bin/stop-all-services.sh
 
 Debug: Logs are under `/var/log/resque/SERVICE/*`.
 
+## Using Kitchen for container builds
+
+Kitchen is Chef component originally used for Integration tests of Chef Recipes. There is
+also basic support for Omnibus. Kitchen allows to quickly setup containers (or VMs) with
+different operating systems so we can create packages for them.
+
+In our example we will:
+
+- use our existing Host OS: `Debian 10`
+- we will build CentOS 7 packages using Docker container prepared by Kitchen
+
+Tested on Debian 10 HOST:
+
+- install Docker following: https://docs.docker.com/engine/install/debian/
+- add your user to `docker` group using `sudo /usr/sbin/usermod -G docker -a $USER`
+
+Install these additional GEMs to your local RBEnv using:
+
+```shell
+sudo gem install test-kitchen kitchen-dokken
+```
+
+WARNING! Must use recent enough Kitchen - version 2.7.2 seems to work well...
+
+Once kitchen is setup you can:
+
+Prepare running container (in our case CentOS 7 using:
+
+```shell
+kitchen converge
+```
+
+Once is converge ready we can login to container using:
+```shell
+kitchen login
+# following should appear
+[root@dokken /]#
+```
+
+Inside container we can do this to build RPM package (instead of .deb in Host's Debian):
+```shell
+mkdir -p /var/cache/omnibus  /opt/resque
+chown kitchen /var/cache/omnibus /opt/resque
+# bundler has weird permission issues...
+chown -R kitchen:kitchen /opt/omnibus-toolchain/embedded
+su - kitchen
+# correct 'ansible' to your username if needed
+cd /host-home/ansible/projects/
+find omnibus-resque/ | cpio -pvdm ~/
+cd ~/omnibus-resque/
+rm -rf  .kitchen .bundle
+. ~/load-omnibus-toolchain.sh
+bundle install --binstubs
+bin/omnibus build resque
+# TODO: copy-back created RPM
+```
+
 ## Notes
 
 ### Rebuild failing
